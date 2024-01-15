@@ -12,7 +12,11 @@ android {
 
     defaultConfig {
         applicationId = "com.own_world.flashlight"
+<<<<<<< HEAD
         minSdk = 16
+=======
+        minSdk = 21
+>>>>>>> d8b6ea6 (Worked Successfully)
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

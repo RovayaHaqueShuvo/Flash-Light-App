@@ -17,6 +17,7 @@ import com.own_world.flashlight.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,53 +29,54 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         binding.flashlight.setOnClickListener {
+            onFlashlight()
+        }
 
-            if (binding.flashlight.isActivated) {
-                binding.button.setText(getString(R.string.turn_off))
-                binding.flashlight.setImageResource(R.drawable.off)
-                changelightstate(true)
-            } else {
-                binding.button.setText(getString(R.string.turn_on))
-                binding.flashlight.setImageResource(R.drawable.on)
-                changelightstate(false)
-            }
-
-
+        binding.flashlight.setOnLongClickListener {
+            offFlashlight()
         }
 
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun changelightstate(b: Boolean) {
-
-        var cameraManager = if (VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getSystemService(Context.CAMERA_SERVICE) as CameraManager
-        } else {
-            TODO("VERSION.SDK_INT < LOLLIPOP")
-        }
-        var cameraId: String? = null
-
+    private fun onFlashlight(): Boolean {
+        var cameraManager: CameraManager? = null
+        cameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
 
         try {
-            // true sets the torch in OFF mode
-            cameraManager!!.setTorchMode(cameraId!!, b)
+            var cameraId = cameraManager.cameraIdList[0]
+            cameraManager.setTorchMode(cameraId, true)
+          /*  if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.LOLLIPOP){
+                cameraManager.setTorchMode(cameraId, true)
+            }*/
+            Toast.makeText(this, "Flashlight is on", Toast.LENGTH_SHORT).show()
 
-            // Inform the user about the flashlight
-            // status using Toast message
-            Toast.makeText(this@MainActivity, "Flashlight is turned OFF", Toast.LENGTH_SHORT)
-                .show()
-        } catch (e: Exception) {
-            e.printStackTrace()
+        }catch (e:CameraAccessException ){
+
+            Toast.makeText(this, "Exception : " + e.message, Toast.LENGTH_SHORT).show()
+        }
+        return true
+    }
+
+    private fun offFlashlight(): Boolean {
+        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+            val cameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
+
+            try {
+                val cameraId = cameraManager.cameraIdList[0]
+                cameraManager.setTorchMode(cameraId, false)
+                Toast.makeText(this, "Flashlight is on", Toast.LENGTH_SHORT).show()
+            }catch (e : CameraAccessException){
+                Toast.makeText(this, "Exception : " + e.message, Toast.LENGTH_SHORT).show()
+            }
+
         }
 
+        return true
     }
 
-    override fun onStart() {
-        super.onStart()
-        binding.button.setText(R.string.turn_on)
-        binding.flashlight.setImageResource(R.drawable.off)
-    }
 
 
 }
