@@ -7,27 +7,22 @@
     android:background="#F8F3ED"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-<<<<<<< HEAD
-=======
 
->>>>>>> d8b6ea6 (Worked Successfully)
     <ImageView
         android:id="@+id/flashlight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        app:layout_constraintEnd_toEndOf="parent"
-=======
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
->>>>>>> d8b6ea6 (Worked Successfully)
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/on" />
 
 
-<<<<<<< HEAD
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="match_parent"
@@ -40,6 +35,5 @@
         app:layout_constraintTop_toBottomOf="@+id/flashlight" />
 
 
-=======
->>>>>>> d8b6ea6 (Worked Successfully)
+
 </androidx.constraintlayout.widget.ConstraintLayout>
